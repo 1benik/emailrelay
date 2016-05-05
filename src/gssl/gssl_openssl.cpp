@@ -292,9 +292,10 @@ GSsl::Context::Context( const std::string & pem_file , unsigned int flags )
 {
 	if( (flags&3U) == 2U )
 		m_ssl_ctx = SSL_CTX_new(SSLv23_method()) ;
-	else if( (flags&3U) == 3U )
-		m_ssl_ctx = SSL_CTX_new(SSLv3_method()) ;
-	else {
+	else if( (flags&3U) == 3U ) {
+		m_ssl_ctx = SSL_CTX_new(SSLv23_method()) ;
+		SSL_CTX_set_options(m_ssl_ctx, SSL_OP_NO_SSLv2) ;
+	} else {
 		m_ssl_ctx = SSL_CTX_new(SSLv23_method()) ;
 		SSL_CTX_set_options(m_ssl_ctx, SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3) ;
 	}
