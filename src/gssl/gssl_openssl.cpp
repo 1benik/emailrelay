@@ -294,8 +294,10 @@ GSsl::Context::Context( const std::string & pem_file , unsigned int flags )
 		m_ssl_ctx = SSL_CTX_new(SSLv23_method()) ;
 	else if( (flags&3U) == 3U )
 		m_ssl_ctx = SSL_CTX_new(SSLv3_method()) ;
-	else
-		m_ssl_ctx = SSL_CTX_new(TLSv1_method()) ;
+	else {
+		m_ssl_ctx = SSL_CTX_new(SSLv23_method()) ;
+		SSL_CTX_set_options(m_ssl_ctx, SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3) ;
+	}
 
 	if( m_ssl_ctx == NULL )
 		throw Error( "SSL_CTX_new" , ERR_get_error() ) ;
