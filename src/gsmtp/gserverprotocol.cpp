@@ -778,7 +778,7 @@ std::pair<std::string,std::string> GSmtp::ServerProtocol::parseTo( const std::st
 
 std::pair<std::string,std::string> GSmtp::ServerProtocol::parse( const std::string & line ) const
 {
-	std::string s = line ;
+	std::string s = line.substr(11) ;
 	G::Str::trim( s , " \t" ) ;
 
 	// strip source route
