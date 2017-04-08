@@ -781,11 +781,11 @@ std::pair<std::string,std::string> GSmtp::ServerProtocol::parse( const std::stri
 	std::string s;
 	
 	if (line.find("MAIL")) {
-		s = line.substr(11);	
+		s = line.substr(13);	
 	} 
 	
 	if (line.find("RCPT")) {
-		s = line.substr(9);
+		s = line.substr(11);
 	}
 		
 	G::Str::trim( s , " \t" ) ;
