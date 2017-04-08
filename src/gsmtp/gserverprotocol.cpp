@@ -778,7 +778,15 @@ std::pair<std::string,std::string> GSmtp::ServerProtocol::parseTo( const std::st
 
 std::pair<std::string,std::string> GSmtp::ServerProtocol::parse( const std::string & line ) const
 {
-	std::string s = line.substr(11) ;
+	size_t from = line.find('MAIL');
+  	size_t rcpt = line.find('RCPT');
+	
+	if (from != std::string::npos) {
+		std::string s = line.substr(11);	
+	} else if (rcpt != std::string::npos) {
+		std::string s = line.substr(9);
+	}
+		
 	G::Str::trim( s , " \t" ) ;
 
 	// strip source route
