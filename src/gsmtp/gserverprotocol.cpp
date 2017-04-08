@@ -778,13 +778,14 @@ std::pair<std::string,std::string> GSmtp::ServerProtocol::parseTo( const std::st
 
 std::pair<std::string,std::string> GSmtp::ServerProtocol::parse( const std::string & line ) const
 {
-	size_t from = line.find('MAIL');
-  	size_t rcpt = line.find('RCPT');
+	std::string s;
 	
-	if (from != std::string::npos) {
-		std::string s = line.substr(11);	
-	} else if (rcpt != std::string::npos) {
-		std::string s = line.substr(9);
+	if (line.find("MAIL")) {
+		s = line.substr(11);	
+	} 
+	
+	if (line.find("RCPT")) {
+		s = line.substr(9);
 	}
 		
 	G::Str::trim( s , " \t" ) ;
