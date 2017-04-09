@@ -769,7 +769,7 @@ std::pair<std::string,std::string> GSmtp::ServerProtocol::parseFrom( const std::
 
 	std::string s = line.substr(11);
 	
-	return s;
+	return std::make_pair(s,std::string());
 }
 
 std::pair<std::string,std::string> GSmtp::ServerProtocol::parseTo( const std::string & line ) const
@@ -779,11 +779,20 @@ std::pair<std::string,std::string> GSmtp::ServerProtocol::parseTo( const std::st
 	
 	std::string s = line.substr(9);
 	
-	return s;
+	return std::make_pair(s,std::string());
 }
 
 std::pair<std::string,std::string> GSmtp::ServerProtocol::parse( const std::string & line ) const
-{		
+{
+	size_t start = line.find( '<' ) ;
+	size_t end = line.find( '>' ) ;
+/* 	if( start == std::string::npos || end == std::string::npos || end < start )
+	{
+		std::string reason( "missing or invalid angle brackets in mailbox name" ) ;
+		return std::make_pair(std::string(),reason) ;
+	} */
+
+	std::string s = line.substr( start + 1U , end - start - 1U ) ;
 	G::Str::trim( s , " \t" ) ;
 
 	// strip source route
