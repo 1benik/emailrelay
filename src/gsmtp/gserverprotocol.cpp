@@ -766,28 +766,24 @@ void GSmtp::ServerProtocol::send( std::string line , bool go_secure )
 std::pair<std::string,std::string> GSmtp::ServerProtocol::parseFrom( const std::string & line ) const
 {
 	// eg. MAIL FROM:<me@localhost>
-	return parse( line ) ;
+
+	std::string s = line.substr(11);
+	
+	return s;
 }
 
 std::pair<std::string,std::string> GSmtp::ServerProtocol::parseTo( const std::string & line ) const
 {
 	// eg. RCPT TO:<@first.co.uk,@second.co.uk:you@final.co.uk>
 	// eg. RCPT TO:<Postmaster>
-	return parse( line ) ;
+	
+	std::string s = line.substr(9);
+	
+	return s;
 }
 
 std::pair<std::string,std::string> GSmtp::ServerProtocol::parse( const std::string & line ) const
-{
-	std::string s;
-	
-	if (line.find("MAIL")) {
-		s = line.substr(13);	
-	} 
-	
-	if (line.find("RCPT")) {
-		s = line.substr(11);
-	}
-		
+{		
 	G::Str::trim( s , " \t" ) ;
 
 	// strip source route
